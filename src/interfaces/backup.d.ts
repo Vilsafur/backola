@@ -1,4 +1,4 @@
-export type backupMode = "COPY"
+export type backupMode = "COPY" | "ARCHIVE"
 
 export interface backupOptions {
     src: string,
