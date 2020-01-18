@@ -5,7 +5,7 @@ import path from 'path';
 export default function (options: backupOptions) {
   return new Promise((resolve, reject) => {
     switch (options.mode) {
-      case backupMode.copy:
+      case "COPY":
         copy(options.src, options.dest)
           .then(() => { resolve() })
           .catch((e) => { reject(e) })

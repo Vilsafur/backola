@@ -1,7 +1,6 @@
 import removeDir from '../src/utils/clean'
 import backup from '../src/backup'
 import { promises, existsSync, openSync } from 'fs';
-import { backupMode } from '../src/interfaces/backup.d';
 import { sep } from 'path';
 
 const baseFolder = __dirname + sep +  'Backup'
@@ -30,7 +29,7 @@ test('backup one file', async function(done) {
   await backup({
     src,
     dest,
-    mode: backupMode.copy
+    mode: "COPY"
   });
   
   const folder = openSync(dest, 'r')
@@ -74,7 +73,7 @@ test('complete backup 2 files', async function () {
   await backup({
     src,
     dest,
-    mode: backupMode.copy
+    mode: "COPY"
   });
   
   const folder = openSync(dest, 'r')

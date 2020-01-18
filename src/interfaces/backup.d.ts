@@ -1,6 +1,4 @@
-export enum backupMode {
-    copy
-}
+export type backupMode = "COPY"
 
 export interface backupOptions {
     src: string,
