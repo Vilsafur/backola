@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+var backola = require('../lib/backup');
+
+var args = process.argv.slice(2);
+
+var options = {
+  src: "Y:\\ANNEE 2011",
+  dest: "Y:\\bck\\ANNEE 2011.zip",
+  mode: "ARCHIVE"
+}
+backola(options)
+  .then(() => { console.log('End') })
+  .catch((err) => { console.error(err) })

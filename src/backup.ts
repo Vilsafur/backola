@@ -1,9 +1,10 @@
 import { backupOptions } from './interfaces/backup.d';
-import { promises, stat, copyFile, existsSync, mkdirSync, createWriteStream } from 'fs';
+import { promises, stat, copyFile, existsSync, mkdirSync, createWriteStream, createReadStream } from 'fs';
 import path, { dirname } from 'path';
 import archiver from 'archiver';
+import { createCipher } from 'crypto';
 
-export default function (options: backupOptions) {
+function backola (options: backupOptions) {
   return new Promise((resolve, reject) => {
     switch (options.mode) {
       case "COPY":
@@ -86,3 +87,25 @@ async function archive(src: string, dest: string) {
 
   await archive.finalize();
 }
+
+async function crypt(src: string, dest: string, key: string) {
+  await archive(src, dest);
+
+  const cipher = createCipher('aes-128-cbc', key);
+  const stream = createReadStream(dest);
+  const writable = createWriteStream(dest.replace('.zip', '.crypt'));
+
+  stream.on('data', (data) => {
+    cipher.update(data);
+  })
+  .on('end', () => {
+    cipher.on('data', (data) => {
+      writable.write(data);
+    })
+    .on('end', () => {
+      writable.end()
+    })
+  })
+}
+
+module.exports = backola;

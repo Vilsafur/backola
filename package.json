@@ -4,9 +4,14 @@
   "description": "backup server",
   "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
     "dev": "tsc --watch",
     "test": "jest --verbose",
-    "test-watch": "jest --verbose --watchAll"
+    "test-watch": "jest --verbose --watchAll",
+    "postinstall": "npm run build"
+  },
+  "bin": {
+    "backola": "./bin/backola"
   },
   "keywords": [
     "backup",
