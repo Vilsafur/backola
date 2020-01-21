@@ -65,9 +65,9 @@ async function archive(src: string, dest: string) {
   }
 
   const output = createWriteStream(dest);
-  const archive = archiver('zip', {
+  const archive = archiver('tar', {
     zlib: {
-      level: 9
+      level: 8
     }
   });
 
