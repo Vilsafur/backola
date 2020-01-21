@@ -1,13 +1,26 @@
 #!/usr/bin/env node
-var backola = require('../lib/backup');
+const argv = require('yargs').argv
+const backola = require('../lib/backup');
+const start = Date.now();
 
-var args = process.argv.slice(2);
-
-var options = {
-  src: "Y:\\ANNEE 2011",
-  dest: "Y:\\bck\\ANNEE 2011.zip",
-  mode: "ARCHIVE"
+if (argv.src === undefined) {
+  throw 'No src defined'
 }
+
+if (argv.dest === undefined) {
+  throw 'No dest defined'
+}
+
+const options = {
+  src: argv.src,
+  dest: argv.dest,
+  mode: argv.mode || "ARCHIVE"
+}
+
 backola(options)
-  .then(() => { console.log('End') })
+  .then(() => {
+    const end = Date.now();
+    const diff = end - start;
+    console.log('Completed in ' + diff.toString() + 'ms');
+  })
   .catch((err) => { console.error(err) })
